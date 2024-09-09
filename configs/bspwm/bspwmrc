@@ -1,0 +1,15 @@
+#! /bin/sh
+
+bash ~/.config/polybar/launch.sh --material &
+picom --config ~/.config/picom/picom.conf &
+nitrogen --restore &
+~/.config/polybar/launch.sh &
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+bspc monitor -d I II III IV V VI VII VIII IX X
+
+bspc config window_gap          12
+
+bspc config split_ratio          0.52
+
