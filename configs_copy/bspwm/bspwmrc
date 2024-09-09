@@ -1,6 +1,6 @@
 #! /bin/sh
 
-bash ~/.config/polybar/launch.sh --material &
+bash ~/.config/polybar/material/launch.sh &
 picom --config ~/.config/picom/picom.conf &
 nitrogen --restore &
 ~/.config/polybar/launch.sh &
