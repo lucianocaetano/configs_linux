@@ -15,8 +15,10 @@ set number relativenumber
 
 set smartindent
 set smarttab
+set expandtab
 set tabstop=2 softtabstop=2
 set shiftwidth=2
+autocmd FileType vue setlocal tabstop=2 shiftwidth=2 softtabstop=2
 autocmd BufRead,BufNewFile *.php,*.py setlocal shiftwidth=4 softtabstop=4
 set expandtab
 set smartcase
@@ -43,7 +45,6 @@ call plug#begin(stdpath('data').'/plugged')
     " Markdown
     Plug 'arnaud-lb/vim-php-namespace'
     Plug '/yaegassy/coc-htmldjango'
-    Plug 'mattn/emmet-vim'
     Plug 'edkolev/tmuxline.vim'
     Plug 'posva/vim-vue'
     Plug 'vim-python/python-syntax'
@@ -55,14 +56,13 @@ call plug#begin(stdpath('data').'/plugged')
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'vim-autoformat/vim-autoformat'
-    Plug 'sbdchd/neoformat'
     
     " NERDTree
     Plug 'preservim/nerdtree'
 
     " VIM-DEVICONS icons for NERDTree
     Plug 'ryanoasis/vim-devicons'
-   
+    " Use release branch (recommended)
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     " Surround.vim
@@ -81,6 +81,7 @@ call plug#end()
 let g:coc_global_extensions = [
       \ 'coc-cfn-lint',
       \ 'coc-tsserver',
+      \ 'coc-emmet', 
       \ 'coc-cspell-dicts',
       \ 'coc-angular',
       \ 'coc-deno',
@@ -97,11 +98,13 @@ let g:coc_global_extensions = [
       \ 'coc-yaml',
       \ 'coc-pairs',
       \ 'coc-explorer',
+      \ 'coc-css',
+      \ 'coc-eslint',
+      \ 'coc-prettier', 
       \ 'coc-highlight',
       \ 'coc-phpls',
       \ 'coc-python'
       \ ]
-
 " TextEdit might fail if hidden is not set.
 set hidden
 
@@ -341,9 +344,6 @@ let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1"
 
-
-
-
 " enable tabline
 let g:airline#extensions#tabline#enabled = 1
 " let g:airline#extensions#tabline#left_sep = ''
@@ -366,9 +366,7 @@ set noshowmode
 " gruvbox
 
 colorscheme gruvbox
-let g:gruvbox_transparent_bg = 1
-let g:gruvbox_invert_tabline = 1
-let g:gruvbox_italicize_strings = 1
+let g:gruvbox_transparent_bg = 0
 
 function! IPhpInsertUse()
   call PhpInsertUse()
@@ -416,4 +414,20 @@ let g:fzf_layout = {
 
 
 let $FZF_DEFAULT_OPTS="--layout=reverse --info=inline --preview-window=right:50% --prompt='> '"
+
+
+"tabine config
+"
+lua <<EOF
+  require('tabnine').setup({
+    disable_auto_comment=true,
+    accept_keymap="<Tab>",
+    dismiss_keymap = "<C-]>",
+    debounce_ms = 800,
+    suggestion_color = {gui = "#808080", cterm = 244},
+    exclude_filetypes = {"TelescopePrompt", "NvimTree"},
+    log_file_path = nil, -- absolute path to Tabnine log file
+  })
+EOF
+
 

@@ -1,3 +1,18 @@
 {
-  "snippets.ultisnips.pythonPrompt": false
+  "snippets.ultisnips.pythonPrompt": false,
+  "eslint.autoFixOnSave": false,
+  "eslint.enable": true,
+  "eslint.filetypes": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+
+  "eslint.packageManager": "pnpm",
+  "vetur.format.enable": true,
+  "vetur.format.options": {
+    "useTabs": false,
+    "tabSize": 4
+  },
+  "vetur.format.defaultFormatter.js": "prettier",
+  "vetur.format.defaultFormatter.html": "prettier",
+  "vetur.format.defaultFormatterOptions": {
+    "wrapAttributes": "force-aligned"
+  }
 }
