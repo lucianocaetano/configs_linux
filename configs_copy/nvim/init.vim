@@ -18,7 +18,7 @@ set smarttab
 set expandtab
 set tabstop=2 softtabstop=2
 set shiftwidth=2
-autocmd FileType vue setlocal tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufRead,BufNewFile *.vue setlocal shiftwidth=2 softtabstop=2
 autocmd BufRead,BufNewFile *.php,*.py setlocal shiftwidth=4 softtabstop=4
 set expandtab
 set smartcase
@@ -39,13 +39,16 @@ let g:loaded_python_provider = 1
 let g:python3_host_prog = '/home/{usuario}/.local/share/virtualenvs/{nvim-999999}/bin/python'
 
 call plug#begin(stdpath('data').'/plugged')
+
+    Plug 'lukas-reineke/indent-blankline.nvim'
+
     Plug 'Mofiqul/dracula.nvim'
     Plug 'sheerun/vim-polyglot'
+    "Plug 'edkolev/tmuxline.vim'
     Plug 'neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
     " Markdown
     Plug 'arnaud-lb/vim-php-namespace'
     Plug '/yaegassy/coc-htmldjango'
-    Plug 'edkolev/tmuxline.vim'
     Plug 'posva/vim-vue'
     Plug 'vim-python/python-syntax'
     Plug 'codota/tabnine-nvim', { 'do': './dl_binaries.sh' }
@@ -67,21 +70,30 @@ call plug#begin(stdpath('data').'/plugged')
 
     " Surround.vim
     Plug 'tpope/vim-surround'
-
     " Airline status bar
+
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+
+    " Prisma Support 
+    Plug 'prisma/vim-prisma'
 
     " NERDCommenter
     Plug 'preservim/nerdcommenter'
 
     Plug 'morhetz/gruvbox'
+    Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+    Plug 'olivercederborg/poimandres.nvim'
+    Plug 'rose-pine/neovim', { 'as': 'rose-pine' }
+    Plug 'dgox16/oldworld.nvim'
+    Plug 'sainnhe/sonokai'
 call plug#end()
 
 let g:coc_global_extensions = [
       \ 'coc-cfn-lint',
       \ 'coc-tsserver',
       \ 'coc-emmet', 
+      \ 'coc-prisma',
       \ 'coc-cspell-dicts',
       \ 'coc-angular',
       \ 'coc-deno',
@@ -275,7 +287,6 @@ command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.org
 " Add (Neo)Vim's native statusline support
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Show all diagnostics
@@ -363,10 +374,7 @@ set showtabline=2
 " We don't need to see things like -- INSERT -- anymore
 set noshowmode
 
-" gruvbox
-
-colorscheme gruvbox
-let g:gruvbox_transparent_bg = 0
+colorscheme sonokai 
 
 function! IPhpInsertUse()
   call PhpInsertUse()
@@ -412,7 +420,6 @@ let g:fzf_layout = {
       \ }
       \ }
 
-
 let $FZF_DEFAULT_OPTS="--layout=reverse --info=inline --preview-window=right:50% --prompt='> '"
 
 
@@ -430,4 +437,17 @@ lua <<EOF
   })
 EOF
 
+" Configuración básica para indent-blankline.nvim
+"
+lua << EOF
+require("ibl").setup()
+require("indent_blankline").setup {
+    char = "|",  -- Usa el carácter que prefieras para las líneas de indentación
+    show_trailing_blankline_indent = false,
+    show_first_indent_level = true,
+    use_treesitter = true,  -- Opcional: usa Tree-sitter para análisis de bloques de código
+    show_current_context = true,  -- Resalta el bloque actual
+    show_current_context_start = true,
+}
+EOF
 
